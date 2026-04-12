@@ -1,4 +1,7 @@
-import './App.css'
+import "./App.css";
+import TodoForm from "./TodoForm ";
+import TodoList from "./TodoList ";
+
 function App() {
   const todoList =[
     {id: 1, title: 'review resources'},
@@ -6,13 +9,14 @@ function App() {
     {id: 3, title:'code out app'},
   ]
 return (
-<div>
+<div className="app-container">
+  <div className="app-box">
   <h1>My Todos</h1>
-  <ul> 
-  {todoList.map((todo) => ( <li key={todo.id}>{todo.title}</li> 
-))}
- </ul> 
+  <TodoForm/>
+  <TodoList/>
+ 
+</div>
 </div>
 )
 }
-export default App
+export default App;
