@@ -4,7 +4,7 @@ function TodoForm() {
         <form>
             <label htmlFor="todo">New todo</label> 
             <input id="todo" type="text"/>
-            <button type="submit">add Todo</button>
+            <button type="submit">Add Todo</button>
         </form>
     )
 }
