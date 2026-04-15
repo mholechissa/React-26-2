@@ -1,12 +1,10 @@
-
 function TodoForm() {
     return(
         <form>
-            <label htmlFor="todo">New todo</label> 
-            <input id="todo" type="text"/>
-            <button type="submit">Add Todo</button>
+            <label htmlFor="todoTitle">Add Todo</label>
+            <input id="todoTitle" type="text" />
+            <button type="submit"disabled>Add</button>
         </form>
-    )
+    );
 }
-
- export default TodoForm;
+export default TodoForm;
