@@ -1,14 +1,48 @@
-function TodoListItem({ todo, onCompleteTodo }) {
+import { useRef, useState } from 'react';
+
+function TodoForm({ onAddTodo }) {
+  const inputRef = useRef();
+
+  const [workingTodoTitle, setWorkingTodoTitle] =
+    useState('');
+
+  const handleAddTodo = (event) => {
+    event.preventDefault();
+
+    const todoTitle = workingTodoTitle.trim();
+
+    if (todoTitle) {
+      onAddTodo(todoTitle);
+
+      setWorkingTodoTitle('');
+
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <li>
-      <input
-        type="checkbox"
-        checked={todo.isCompleted}
-        onChange={() => onCompleteTodo(todo.id)}
+    <form onSubmit={handleAddTodo}>
+      <TextInputWithLabel
+        elementId="todoTitle"
+        labelText="Todo"
+        ref={inputRef}
+        value={workingTodoTitle}
+        onChange={(event) =>
+          setWorkingTodoTitle(event.target.value)
+        }
       />
-      {todo.title}
-    </li>
+
+      <button
+        type="submit"
+        disabled={!isValidTodoTitle(workingTodoTitle)}
+      >
+        Add Todo
+      </button>
+    </form>
   );
 }
 
-export default TodoListItem;
+export default TodoForm;
+
+
+
