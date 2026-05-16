@@ -3,26 +3,44 @@ import TodoForm from "./features/TodoForm";
 import TodoList from "./features/TodoList/TodoList";
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  const [todos, setTodos] = useState([]);
 
-  const addTodo = (newTodo) => {
-    setTodoList([
-      ...todoList,
-      {
-        id: Date.now(),
-        title: newTodo,
-      },
-    ]);
-  };
+  function addTodo(newTodoTitle) {
+    const newTodo = {
+      id: Date.now(),
+      title: newTodoTitle,
+      isCompleted: false,
+    };
+
+    setTodos([...todos, newTodo]);
+  }
+
+  function completeTodo(id) {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
+  function updateTodo(updatedTodo) {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === updatedTodo.id
+          ? updatedTodo
+          : todo
+      )
+    );
+  }
 
   return (
-    <>
-      <h1>My Todos List</h1>
+    <div>
+      <h1>Todo List</h1>
 
       <TodoForm onAddTodo={addTodo} />
 
-      <TodoList todoList={todoList} />
-    </>
+      <TodoList
+        todos={todos}
+        onCompleteTodo={completeTodo}
+        onUpdateTodo={updateTodo}
+      />
+    </div>
   );
 }
 

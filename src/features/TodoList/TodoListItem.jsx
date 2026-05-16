@@ -1,48 +1,67 @@
-import { useRef, useState } from 'react';
+import { useState } from "react";
+import TextInputWithLabel from "../../shared/TextInputWithLabel";
 
-function TodoForm({ onAddTodo }) {
-  const inputRef = useRef();
+function TodoListItem({
+  todo,
+  onCompleteTodo,
+  onUpdateTodo,
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-  const [workingTodoTitle, setWorkingTodoTitle] =
-    useState('');
+  function handleCancel() {
+    setIsEditing(false);
+    setWorkingTitle(todo.title);
+  }
 
-  const handleAddTodo = (event) => {
+  function handleUpdate(event) {
     event.preventDefault();
 
-    const todoTitle = workingTodoTitle.trim();
+    onUpdateTodo({
+      ...todo,
+      title: workingTitle,
+    });
 
-    if (todoTitle) {
-      onAddTodo(todoTitle);
-
-      setWorkingTodoTitle('');
-
-      inputRef.current.focus();
-    }
-  };
+    setIsEditing(false);
+  }
 
   return (
-    <form onSubmit={handleAddTodo}>
-      <TextInputWithLabel
-        elementId="todoTitle"
-        labelText="Todo"
-        ref={inputRef}
-        value={workingTodoTitle}
-        onChange={(event) =>
-          setWorkingTodoTitle(event.target.value)
-        }
-      />
+    <li>
+     {isEditing ? (
+  <form onSubmit={handleUpdate}>
+    <TextInputWithLabel
+      elementId={`edit-${todo.id}`}
+      label="Edit Todo"
+      value={workingTitle}
+      onChange={(event) => setWorkingTitle(event.target.value)}
+    />
 
-      <button
-        type="submit"
-        disabled={!isValidTodoTitle(workingTodoTitle)}
-      >
-        Add Todo
-      </button>
-    </form>
+    <button type="submit">
+      Update
+    </button>
+
+    <button
+      type="button"
+      onClick={handleCancel}
+    >
+      Cancel
+    </button>
+  </form>
+) : (
+        <>
+          <span>{todo.title}</span>
+
+          <button type="button" onClick={() => onCompleteTodo(todo.id)}>
+            Complete
+          </button>
+
+          <button type="button" onClick={() => setIsEditing(true)}>
+            Edit
+          </button>
+        </>
+      )}
+    </li>
   );
 }
 
-export default TodoForm;
-
-
-
+export default TodoListItem;

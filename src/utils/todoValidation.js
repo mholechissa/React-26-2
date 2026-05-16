@@ -1,3 +1,5 @@
-export function isValidTodoTitle(title) {
-    return title.trim() !== '';
+function isValidTodoTitle(todoTitle) {
+  return todoTitle.trim().length > 0;
 }
+
+export default isValidTodoTitle;
