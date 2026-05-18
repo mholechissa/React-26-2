@@ -1,9 +1,7 @@
 import TodoListItem from "./TodoListItem";
 
-function TodoList({ todoList, onCompleteTodo }) {
-  const filteredTodoList = todoList.filter(
-    (todo) => !todo.isCompleted
-  );
+function TodoList({ todos, onCompleteTodo, onUpdateTodo }) {
+  const filteredTodoList = todos.filter((todo) => !todo.isCompleted);
 
   return (
     <>
@@ -16,6 +14,7 @@ function TodoList({ todoList, onCompleteTodo }) {
               key={todo.id}
               todo={todo}
               onCompleteTodo={onCompleteTodo}
+              onUpdateTodo={onUpdateTodo}
             />
           ))}
         </ul>
