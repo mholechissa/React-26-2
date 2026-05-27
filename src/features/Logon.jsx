@@ -1,49 +1,48 @@
 import { useState } from "react";
 
-function Logon({ onSetEmail, onSetToken }) {
+function Logon({ onSetToken = () => {}, onSetEmail = () => {} }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authError, setAuthError] = useState("");
-  const [isLoggingOn, setIsLoggingOn] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setAuthError("");
-    setIsLoggingOn(true);
+
+    setError("");
 
     try {
-      const response = await fetch("/api/users/logon", {
+      const response = await fetch("/api/logon", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Invalid email or password");
+      }
 
       const data = await response.json();
 
-      if (response.status === 200 && data.name && data.csrfToken) {
-        onSetEmail(data.name);
-        onSetToken(data.csrfToken);
-      } else {
-        setAuthError(`Authentication failed: ${data?.message}`);
-      }
+      onSetToken(data.csrfToken);
+      onSetEmail(email);
     } catch (error) {
-      setAuthError(`Error: ${error.name} | ${error.message}`);
-    } finally {
-      setIsLoggingOn(false);
+      setError(error.message);
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      {authError && <p>{authError}</p>}
-
       <div>
         <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
-          required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -54,15 +53,14 @@ function Logon({ onSetEmail, onSetToken }) {
         <input
           id="password"
           type="password"
-          required
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
 
-      <button type="submit" disabled={isLoggingOn}>
-        {isLoggingOn ? "Logging in..." : "Log On"}
-      </button>
+      <button type="submit">Log On</button>
+
+      {error && <p>{error}</p>}
     </form>
   );
 }

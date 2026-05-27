@@ -40,7 +40,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
         <form onSubmit={handleUpdate}>
           <TextInputWithLabel
             elementId={`update-todo-${todo.id}`}
-            label="Edit Todo"
+            labelText="Edit Todo"
             value={workingTitle}
             onChange={(event) => setWorkingTitle(event.target.value)}
           />
