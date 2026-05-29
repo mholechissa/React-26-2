@@ -24,12 +24,12 @@ export const TODO_ACTIONS = {
 
 export const initialTodoState = {
   todoList: [],
-  error: '',
-  filterError: '',
-  isTodoListLoading: true,
-  sortBy: 'creationDate',
-  sortDirection: 'desc',
-  filterTerm: '',
+  error: "",
+  filterError: "",
+  isTodoListLoading: false,
+  sortBy: "createdDate",
+  sortDirection: "asc",
+  filterTerm: "",
   dataVersion: 0,
 };
 
