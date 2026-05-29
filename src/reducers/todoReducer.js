@@ -19,6 +19,7 @@ export const TODO_ACTIONS = {
   SET_FILTER: 'SET_FILTER',
 
   CLEAR_ERROR: 'CLEAR_ERROR',
+  RESET_FILTERS: 'RESET_FILTER_ERROR',
   RESET_FILTERS: 'RESET_FILTERS',
 };
 
@@ -35,56 +36,58 @@ export const initialTodoState = {
 
 export function todoReducer(state, action) {
   switch (action.type) {
-    case TODO_ACTIONS.FETCH_START:
-      return {
-        ...state,
-        isTodoListLoading: true,
-        error: '',
-        filterError: '',
-      };
+ case TODO_ACTIONS.ADD_TODO_START:
+  return {
+    ...state,
+    error: "",
+  };
 
-    case TODO_ACTIONS.FETCH_SUCCESS:
-      return {
-        ...state,
-        todoList: action.payload.todos,
-        isTodoListLoading: false,
-      };
+case TODO_ACTIONS.ADD_TODO_SUCCESS:
+  return {
+    ...state,
+    dataVersion: state.dataVersion + 1,
+  };
 
-    case TODO_ACTIONS.FETCH_ERROR:
-      return {
-        ...state,
-        error: action.payload.message,
-        isTodoListLoading: false,
-      };
+case TODO_ACTIONS.ADD_TODO_ERROR:
+  return {
+    ...state,
+    error: action.payload.message,
+  };
 
-    case TODO_ACTIONS.SET_SORT:
-      return {
-        ...state,
-        sortBy: action.payload.sortBy,
-        sortDirection: action.payload.sortDirection,
-      };
+case TODO_ACTIONS.COMPLETE_TODO_START:
+  return state;
 
-    case TODO_ACTIONS.SET_FILTER:
-      return {
-        ...state,
-        filterTerm: action.payload.filterTerm,
-      };
+case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
+  return {
+    ...state,
+    dataVersion: state.dataVersion + 1,
+  };
 
-    case TODO_ACTIONS.CLEAR_ERROR:
-      return {
-        ...state,
-        error: '',
-        filterError: '',
-      };
+case TODO_ACTIONS.COMPLETE_TODO_ERROR:
+  return {
+    ...state,
+    error: action.payload.message,
+  };
 
-    case TODO_ACTIONS.RESET_FILTERS:
-      return {
-        ...state,
-        filterTerm: '',
-        sortBy: 'creationDate',
-        sortDirection: 'desc',
-      };
+case TODO_ACTIONS.UPDATE_TODO_START:
+  return state;
 
+case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
+  return {
+    ...state,
+    dataVersion: state.dataVersion + 1,
+  };
+
+case TODO_ACTIONS.UPDATE_TODO_ERROR:
+  return {
+    ...state,
+    error: action.payload.message,
+  };
+case TODO_ACTIONS.CLEAR_ERROR_FILTER_ERROR:
+  return {
+    ...state,
+    filterError: "",
+  }
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
