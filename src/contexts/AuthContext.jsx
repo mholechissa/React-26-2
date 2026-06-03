@@ -10,17 +10,19 @@ export function useAuth() {
   }
 
   return context;
-} 
+}
 
 export function AuthProvider({ children }) {
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState("fake-token");
+  const [token, setToken] = useState("");
 
   async function login(userEmail, password) {
     try {
       const response = await fetch("/api/users/logon", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
         body: JSON.stringify({
           email: userEmail,
@@ -39,7 +41,7 @@ export function AuthProvider({ children }) {
 
       return {
         success: false,
-        error: `Authentication failed: ${data?.message}`,
+        error: `Authentication failed: ${data?.message || "Invalid login"}`,
       };
     } catch {
       return {
@@ -76,9 +78,5 @@ export function AuthProvider({ children }) {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -78,7 +78,7 @@ function TodosPage() {
           payload: {
             message:
               debouncedFilterTerm ||
-              sortBy !== "creationDate" ||
+              sortBy !== "createdDate" ||
               sortDirection !== "desc"
                 ? `Error filtering/sorting todos: ${error.message}`
                 : `Error fetching todos: ${error.message}`,
