@@ -110,13 +110,15 @@ export function todoReducer(state, action) {
       };
 
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
-      return {
-        ...state,
-        error: action.payload.message,
-        todoList: state.todoList.map((todo) =>
-          todo.id === action.payload.id ? { ...todo, isCompleted: false } : todo
-        ),
-      };
+  return {
+    ...state,
+    error: action.payload.message,
+    todoList: state.todoList.map((todo) =>
+      todo.id === action.payload.originalTodo.id
+        ? action.payload.originalTodo
+        : todo
+    ),
+  };
 
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
