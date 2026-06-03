@@ -74,22 +74,15 @@ function TodosPage() {
         });
       } catch (error) {
         dispatch({
-          type: TODO_ACTIONS.FETCH_ERROR,
-          payload: {
-            message:
-              debouncedFilterTerm ||
-              sortBy !== "createdDate" ||
-              sortDirection !== "desc"
-                ? `Error filtering/sorting todos: ${error.message}`
-                : `Error fetching todos: ${error.message}`,
-            isFilterError:
-              debouncedFilterTerm ||
-              sortBy !== "creationDate" ||
-              sortDirection !== "desc",
-          },
-        });
-      }
-    }
+        type: TODO_ACTIONS.FETCH_ERROR,
+        payload: {
+      message: debouncedFilterTerm
+        ? `Error filtering todos: ${error.message}`
+        : `Error fetching todos: ${error.message}`,
+      isFilterError: !!debouncedFilterTerm,
+    },
+  });
+}
 
     fetchTodos();
   }, [token, sortBy, sortDirection, debouncedFilterTerm]);
