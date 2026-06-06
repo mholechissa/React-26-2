@@ -1,46 +1,46 @@
-import { useState } from "react";
-import TodoForm from "./features/TodoForm";
-import TodoList from "./features/TodoList/TodoList";
+import "./App.css";
+import { Routes, Route } from "react-router";
+import HomePage from "./pages/HomePage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import TodosPage from "./pages/TodosPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
+import RequireAuth from "./components/RequireAuth.jsx";
+import Navigation from "./shared/Navigation.jsx";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-
-  function addTodo(newTodoTitle) {
-    const newTodo = {
-      id: Date.now(),
-      title: newTodoTitle,
-      isCompleted: false,
-    };
-
-    setTodos([...todos, newTodo]);
-  }
-
-  function completeTodo(id) {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  }
-
-  function updateTodo(updatedTodo) {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === updatedTodo.id
-          ? updatedTodo
-          : todo
-      )
-    );
-  }
-
   return (
-    <div>
+    <>
       <h1>Todo List</h1>
+      <Navigation />
 
-      <TodoForm onAddTodo={addTodo} />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
-      <TodoList
-        todos={todos}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-      />
-    </div>
+        <Route
+          path="/todos"
+          element={
+            <RequireAuth>
+              <TodosPage />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          }
+        />
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 }
 
