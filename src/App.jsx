@@ -7,13 +7,12 @@ import TodosPage from "./pages/TodosPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
-import Navigation from "./shared/Navigation.jsx";
+import Header from "./shared/Header.jsx";
 
 function App() {
   return (
     <>
-      <h1>Todo List</h1>
-      <Navigation />
+      <Header />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

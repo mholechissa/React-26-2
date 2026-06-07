@@ -18,8 +18,20 @@ function TodoList({
     return true;
   });
 
+  function getEmptyMessage(statusFilter) {
+    if (statusFilter === "active") {
+      return "No active todos found.";
+    }
+
+    if (statusFilter === "completed") {
+      return "No completed todos found.";
+    }
+
+    return "No todos found.";
+  }
+
   if (filteredTodos.length === 0) {
-    return <p>No todos found.</p>;
+    return <p>{getEmptyMessage(statusFilter)}</p>;
   }
 
   return (
