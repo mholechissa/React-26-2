@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 function ProfilePage() {
   const { email, token, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const [todoStats, setTodoStats] = useState({
     total: 0,
     completed: 0,
     active: 0,
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,6 +31,10 @@ function ProfilePage() {
           credentials: "include",
         });
 
+        if (response.status === 401) {
+          throw new Error("Unauthorized");
+        }
+
         if (!response.ok) {
           throw new Error("Failed to fetch todos");
         }
@@ -40,6 +47,11 @@ function ProfilePage() {
 
         setTodoStats({ total, completed, active });
       } catch (err) {
+        if (err.message === "Unauthorized") {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         setError(`Error loading statistics: ${err.message}`);
       } finally {
         setLoading(false);
@@ -47,7 +59,7 @@ function ProfilePage() {
     }
 
     fetchTodoStats();
-  }, [token]);
+  }, [token, navigate]);
 
   const completionPercentage =
     todoStats.total === 0
