@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import DOMPurify from "dompurify";
 import TextInputWithLabel from "../shared/TextInputWithLabel";
 import { isValidTodoTitle } from "../utils/todoValidation";
 
@@ -17,7 +18,12 @@ function TodoForm({ onAddTodo }) {
       return;
     }
 
-    onAddTodo(workingTodoTitle);
+    const sanitizedTitle = DOMPurify.sanitize(workingTodoTitle.trim(), {
+      ALLOWED_TAGS: [],
+      ALLOWED_ATTR: [],
+    });
+
+    onAddTodo(sanitizedTitle);
     setWorkingTodoTitle("");
     todoTitleInput.current.focus();
   }
@@ -32,10 +38,7 @@ function TodoForm({ onAddTodo }) {
         ref={todoTitleInput}
       />
 
-      <button
-        type="submit"
-        disabled={!isValidTodoTitle(workingTodoTitle)}
-      >
+      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
         Add Todo
       </button>
     </form>
