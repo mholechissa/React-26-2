@@ -30,17 +30,25 @@ function TodoForm({ onAddTodo }) {
 
   return (
     <form onSubmit={handleAddTodo}>
-      <TextInputWithLabel
-        elementId="todoTitle"
-        labelText="Todo"
-        value={workingTodoTitle}
-        onChange={(event) => setWorkingTodoTitle(event.target.value)}
-        ref={todoTitleInput}
-      />
+    <TextInputWithLabel
+  elementId="todoTitle"
+  labelText="Todo"
+  value={workingTodoTitle}
+  onChange={(event) => setWorkingTodoTitle(event.target.value)}
+  ref={todoTitleInput}
+  maxLength={100}
+/>
 
-      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
-        Add Todo
-      </button>
+<p>
+  {workingTodoTitle.length}/100 characters
+</p>
+
+<button
+  type="submit"
+  disabled={!isValidTodoTitle(workingTodoTitle)}
+>
+  Add Todo
+</button>
     </form>
   );
 }
