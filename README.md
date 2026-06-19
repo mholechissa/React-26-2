@@ -1,8 +1,24 @@
 # Todo List Application
 
+## Live Demo
+
+**Vercel Deployment:** https://your-vercel-url.vercel.app
+
+## Screenshots
+
+### Desktop View
+
+![Desktop Screenshot](./screenshots/desktop.png)
+
+### Mobile View
+
+![Mobile Screenshot](./screenshots/mobile.png)
+
+---
+
 ## Description
 
-This is a React-based Todo List application that allows users to create, edit, complete, delete, search, and filter tasks. The application includes authentication, protected routes, and responsive design to provide a modern user experience.
+This is a React-based Todo List application that allows users to create, edit, complete, delete, search, sort, and filter tasks. The application includes authentication, protected routes, input sanitization, and responsive design.
 
 ## Features
 
@@ -16,8 +32,10 @@ This is a React-based Todo List application that allows users to create, edit, c
 * Sort todos
 * Filter by All, Active, and Completed
 * Responsive design
-* Input validation and sanitization using DOMPurify
+* Input validation
+* Input sanitization using DOMPurify
 * React Router navigation
+* Accessibility enhancements
 
 ## Technologies Used
 
@@ -26,47 +44,41 @@ This is a React-based Todo List application that allows users to create, edit, c
 * Vite
 * React Router
 * DOMPurify
-* CSS
+* CSS Modules (or your chosen styling solution)
 * Git & GitHub
 
-## Getting Started
+## Installation
 
-### Prerequisites
-
-* Node.js
-* npm
-
-### Installation
-
-bash
+```bash
 git clone <repository-url>
 cd react-26-2
 npm install
 npm run dev
-
+```
 
 ## Available Scripts
 
-### Development Server
+### Development
 
-bash
+```bash
 npm run dev
-
+```
 
 ### Production Build
 
-bash
+```bash
 npm run build
+```
 
+### Preview Build
 
-### Preview Production Build
-
-bash
+```bash
 npm run preview
+```
 
 ## Design Decisions
 
-The application uses React Router for navigation and route protection. CSS was used to provide a clean and responsive user interface. DOMPurify was implemented to sanitize user input and improve application security.
+The application uses React Router for navigation and route protection. DOMPurify sanitizes user input before storage. Responsive layouts and accessibility improvements provide a better user experience across devices.
 
 ## Future Improvements
 
@@ -74,11 +86,11 @@ The application uses React Router for navigation and route protection. CSS was u
 * Drag-and-drop task ordering
 * Backend database integration
 * Unit testing
-* Progressive Web App (PWA) features
+* Progressive Web App (PWA)
 
 ## License
 
-MIT License
+This project is licensed under the MIT License. See LICENSE.md for details.
 
 ## Author
 
