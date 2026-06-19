@@ -24,7 +24,11 @@ function TodoList({
 
   function getEmptyMessage(statusFilter) {
     if (statusFilter === "active") {
-      return "No active todos found.";
+     return (
+  <p className="empty-state">
+    No todos found. Add your first todo to get started.
+  </p>
+);
     }
 
     if (statusFilter === "completed") {

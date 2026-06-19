@@ -1,0 +1,33 @@
+.empty-state {
+  padding: 24px;
+  margin-top: 16px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  color: #1e3a8a;
+  text-align: center;
+  font-weight: 600;
+}
+.loading-state {
+  padding: 16px;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  color: #92400e;
+  font-weight: 600;
+}
+.error-state {
+  padding: 16px;
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  border-radius: 12px;
+  color: #991b1b;
+  font-weight: 600;
+}
+.stats-card {
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
