@@ -8,11 +8,12 @@
 
 ### Desktop View
 
-![Desktop Screenshot](./screenshots/desktop.png)
+![Desktop Screenshot](./screenshoots/Desktop.png)
+
 
 ### Mobile View
 
-![Mobile Screenshot](./screenshots/mobile.png)
+![Mobile Screenshot](./screenshoots/Mobile.png)
 
 ---
 
