@@ -1,1 +1,103 @@
-/*empty file */
+body {
+  margin: 0;
+  background: #f4f7fb;
+  color: #1f2937;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+header {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+h1,
+h2,
+h3 {
+  color: #111827;
+}
+
+nav ul {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+a {
+  color: #2563eb;
+}
+
+button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+input,
+select {
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  margin: 6px;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+form,
+main,
+section,
+div {
+  box-sizing: border-box;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 12px;
+  }
+
+  header {
+    padding: 16px;
+  }
+
+  button,
+  input,
+  select {
+    width: 100%;
+    margin: 6px 0;
+  }
+}

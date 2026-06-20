@@ -5,41 +5,51 @@ import { isValidTodoTitle } from "../../utils/todoValidation";
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleCancel() {
     setIsEditing(false);
     setWorkingTitle(todo.title);
+    setErrorMessage("");
   }
 
   function handleUpdate(event) {
     event.preventDefault();
 
-    if (!isEditing) return;
-
     if (!isValidTodoTitle(workingTitle)) {
+      setErrorMessage(
+        "Todo title must contain between 1 and 100 characters."
+      );
       return;
     }
 
     onUpdateTodo({
       ...todo,
-      title: workingTitle,
+      title: workingTitle.trim(),
     });
 
+    setErrorMessage("");
     setIsEditing(false);
   }
 
   return (
-    <li>
+    <li className="todo-item">
       {isEditing ? (
         <form onSubmit={handleUpdate}>
           <TextInputWithLabel
             elementId={`edit-${todo.id}`}
             labelText="Edit Todo"
             value={workingTitle}
-            onChange={(event) =>
-              setWorkingTitle(event.target.value)
-            }
+            onChange={(event) => {
+              setWorkingTitle(event.target.value);
+              setErrorMessage("");
+            }}
+            maxLength={100}
           />
+
+          {errorMessage && (
+            <p className="error-state">{errorMessage}</p>
+          )}
 
           <button
             type="submit"
@@ -64,7 +74,16 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             onChange={() => onCompleteTodo(todo.id)}
           />
 
-          <span onClick={() => setIsEditing(true)}>
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsEditing(true)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                setIsEditing(true);
+              }
+            }}
+          >
             {todo.title}
           </span>
         </label>

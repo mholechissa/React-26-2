@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 function ProfilePage() {
-  const { email, token, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+  const { email, isAuthenticated } = useAuth();
 
   const [todoStats, setTodoStats] = useState({
     total: 0,
@@ -12,54 +10,15 @@ function ProfilePage() {
     active: 0,
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
   useEffect(() => {
-    async function fetchTodoStats() {
-      if (!token) return;
+    const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
-      try {
-        setLoading(true);
-        setError("");
+    const total = savedTodos.length;
+    const completed = savedTodos.filter((todo) => todo.isCompleted).length;
+    const active = total - completed;
 
-        const response = await fetch("/api/tasks", {
-          method: "GET",
-          headers: {
-            "X-CSRF-TOKEN": token,
-          },
-          credentials: "include",
-        });
-
-        if (response.status === 401) {
-          throw new Error("Unauthorized");
-        }
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-
-        const todos = await response.json();
-
-        const total = todos.length;
-        const completed = todos.filter((todo) => todo.isCompleted).length;
-        const active = total - completed;
-
-        setTodoStats({ total, completed, active });
-      } catch (err) {
-        if (err.message === "Unauthorized") {
-          navigate("/login", { replace: true });
-          return;
-        }
-
-        setError(`Error loading statistics: ${err.message}`);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTodoStats();
-  }, [token, navigate]);
+    setTodoStats({ total, completed, active });
+  }, []);
 
   const completionPercentage =
     todoStats.total === 0
@@ -67,7 +26,7 @@ function ProfilePage() {
       : Math.round((todoStats.completed / todoStats.total) * 100);
 
   return (
-    <div>
+    <section>
       <h2>Profile</h2>
 
       <p>
@@ -81,22 +40,18 @@ function ProfilePage() {
 
       <h3>Todo Statistics</h3>
 
-      {loading && <p>Loading statistics...</p>}
+      <div className="stats-card">
+        <ul>
+          <li>Total Todos: {todoStats.total}</li>
+          <li>Completed Todos: {todoStats.completed}</li>
+          <li>Active Todos: {todoStats.active}</li>
+        </ul>
 
-      {error && <p>{error}</p>}
-
-      {!loading && !error && (
-        <>
-          <ul>
-            <li>Total Todos: {todoStats.total}</li>
-            <li>Completed Todos: {todoStats.completed}</li>
-            <li>Active Todos: {todoStats.active}</li>
-          </ul>
-
-          <p>Completion: {completionPercentage}%</p>
-        </>
-      )}
-    </div>
+        <p>
+          <strong>Completion:</strong> {completionPercentage}%
+        </p>
+      </div>
+    </section>
   );
 }
 
