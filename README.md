@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-**Vercel Deployment:** https://your-vercel-url.vercel.app
+**Vercel Deployment:** https://react-26-2.vercel.app
 
 ## Screenshots
 
